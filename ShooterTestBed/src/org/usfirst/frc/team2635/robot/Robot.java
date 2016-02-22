@@ -63,7 +63,7 @@ public class Robot extends IterativeRobot
 	final int SHOOTER_SPEED_AXIS = 2;
 	
 	final int RIGHT_FLYWHEEL_CHANNEL = 10;
-	final int LEFT_FLYWHEEL_CHANNEL = 8;
+	final int LEFT_FLYWHEEL_CHANNEL = 7;
 	final int FEED_CHANNEL = 11;
 	
 	final double FEED_SPEED = -1.0;

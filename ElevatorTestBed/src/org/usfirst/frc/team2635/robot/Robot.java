@@ -31,8 +31,8 @@ public class Robot extends IterativeRobot
 	
 	final String SETPOINT_KEY = "Setpoint";
 	
-	final int ELEVATOR_RIGHT_CHANNEL = 11;
-	final int ELEVATOR_LEFT_CHANNEL = 14;
+	final int ELEVATOR_RIGHT_CHANNEL = 12;
+	final int ELEVATOR_LEFT_CHANNEL = 13;
 	
 
 	public static final int REAR_RIGHT_CHANNEL = 1;
@@ -130,6 +130,9 @@ public class Robot extends IterativeRobot
     	SmartDashboard.putNumber(ELEVATOR_KEY_D, ELEVATOR_D_DEFAULT);
 
 		rightElevatorMotor = new CANTalon(ELEVATOR_RIGHT_CHANNEL);
+		rightElevatorMotor.changeControlMode(TalonControlMode.PercentVbus);
+		rightElevatorMotor.enable();
+		
 		//Position mode
     	//rightElevatorMotor.changeControlMode(TalonControlMode.Position);
     	//rightElevatorMotor.enableBrakeMode(true);
@@ -138,6 +141,7 @@ public class Robot extends IterativeRobot
     	leftElevatorMotor = new CANTalon(ELEVATOR_LEFT_CHANNEL);
     	leftElevatorMotor.changeControlMode(TalonControlMode.Follower);
     	leftElevatorMotor.set(ELEVATOR_RIGHT_CHANNEL);
+    	leftElevatorMotor.enable();
     			
 		elevateMethod = new ActuatorSimple(rightElevatorMotor);
 		driveInit();
@@ -172,6 +176,7 @@ public class Robot extends IterativeRobot
 	@Override
 	public void teleopInit()
 	{
+		
 		//Position mode
 		//rightElevatorMotor.setPID(SmartDashboard.getNumber(ELEVATOR_KEY_P), SmartDashboard.getNumber(ELEVATOR_KEY_I), SmartDashboard.getNumber(ELEVATOR_KEY_D));
 	}
@@ -181,17 +186,23 @@ public class Robot extends IterativeRobot
 		//For vbus mode
 		if(rightJoystick.getRawButton(2))
 		{
+//			rightElevatorMotor.set(-SmartDashboard.getNumber(SETPOINT_KEY));
+//			leftElevatorMotor.set(-SmartDashboard.getNumber(SETPOINT_KEY));
 			elevateMethod.actuate(-SmartDashboard.getNumber(SETPOINT_KEY));
 		}
 		else if(rightJoystick.getRawButton(3))
 		{
-			elevateMethod.actuate(SmartDashboard .getNumber(SETPOINT_KEY));
+//			rightElevatorMotor.set(SmartDashboard.getNumber(SETPOINT_KEY));
+//			leftElevatorMotor.set(SmartDashboard.getNumber(SETPOINT_KEY));
+			elevateMethod.actuate(SmartDashboard.getNumber(SETPOINT_KEY));
 		}
 		else
 		{
+//			rightElevatorMotor.set(0.0);
+//			leftElevatorMotor.set(0.0);
 			elevateMethod.actuate(0.0);
 		}
-		driveTeleop();
+		//driveTeleop();
 		//For position mode
 		//elevateMethod.actuate(SmartDashboard.getNumber(SETPOINT_KEY));
 		//SmartDashboard.putNumber("Error", rightElevatorMotor.getError());
